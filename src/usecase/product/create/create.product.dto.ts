@@ -6,5 +6,5 @@ export interface InputCreateProductDto {
 export interface OutputCreateProductDto {
   id: string;
   name: string;
-  price: string;
+  price: number;
 }

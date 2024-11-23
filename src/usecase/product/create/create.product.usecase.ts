@@ -1,3 +1,4 @@
+import ProductFactory from "../../../domain/product/factory/product.factory";
 import ProductRepositoryInterface from "../../../domain/product/repository/product-repository.interface";
 import { UseCaseInterface } from "../../usecase.interface";
 import {
@@ -8,7 +9,15 @@ import {
 export default class CreateProductUseCase implements UseCaseInterface {
   constructor(private readonly ProductRepository: ProductRepositoryInterface) {}
 
-  execute(input: InputCreateProductDto): Promise<OutputCreateProductDto> {
-    throw new Error("Method not implemented.");
+  async execute(input: InputCreateProductDto): Promise<OutputCreateProductDto> {
+    const product = ProductFactory.createA(input?.name, input?.price);
+
+    await this.ProductRepository.create(product);
+
+    return {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+    };
   }
 }
